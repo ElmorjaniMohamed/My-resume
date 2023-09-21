@@ -10,11 +10,11 @@ Créez une application console pour gérer une liste de tâches à faire (ToDo l
 L’application doit avoir un menu qui vous permet de :
 
 
-# Ajouter une nouvelle tâche : #### Une tâche est définie par un identifiant unique, un titre, une description, un deadline et son statut (à réaliser”, “en cours de réalisation”,  “finalisée").
+# Ajouter une nouvelle tâche : ### Une tâche est définie par un identifiant unique, un titre, une description, un deadline et son statut (à réaliser”, “en cours de réalisation”,  “finalisée").
 
 # Ajouter plusieurs nouvelles tâches.
 
-# Afficher la liste de toutes les tâches #### (Identifiant, Titre, Description, Deadline, Statut) :
+# Afficher la liste de toutes les tâches (Identifiant, Titre, Description, Deadline, Statut) :
 
 * Trier les tâches par ordre alphabétique.
 
