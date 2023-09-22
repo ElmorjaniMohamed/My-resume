@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char T[100], D[300], S[20];
-int t;
 
-
+int nbrtache=0, i, j;
+char identifiant[100];
+char title[100][100];
+char description[100][200];
+char deadline[100][20];
+char statut[100][40];
 //cette fonction pour afficher le menu
 void afficher_Menu()
 {
@@ -17,7 +20,7 @@ void afficher_Menu()
     printf("4- Modifier une tache\n\n");
     printf("5- Supprimer une tache par identifiant\n\n");
     printf("6- Rechercher les taches\n\n");
-    printf("7- Statistiques\n");
+    printf("7- Statistiques\n\n");
     printf("8- Quitter\n\n");
 }
 
@@ -54,108 +57,158 @@ void statistique()
 //ajouter nouvelle tâche
 void nouvelle_tache()
 {
-    int id,jour,n=1;
+    printf("Veuiller entrer la tache:\n");
+    printf("\n");
 
-    printf("Veuiller entrer une nouvelle tache:\n");
+    identifiant[nbrtache] = nbrtache + 1;
 
-    printf("identifiant:");
-    scanf("%d",&id);
+    printf("Titre: ");
+    scanf("%s", title[nbrtache]);
 
-    printf("Title:");
-    scanf(" %[^\n]s",T);
+    printf("Description: ");
+    scanf("%s", description[nbrtache]);
 
-    printf("Description:");
-    scanf(" %[^\n]s",D);
+    printf("Deadline (Ex: 12/03/2023) : ");
+    scanf("%s", deadline[nbrtache]);
 
-    printf("Deadline(en jour(s)):");
-    scanf("%d",&jour);
+    printf("Statut (à realiser/en cours/finalisee) : ");
+    scanf("%s", statut[nbrtache]);
+    nbrtache++;
 
-    printf("Statut:");
-    scanf(" %[^\n]s\n\n\n",S);
-
-
-    printf("=========Tache:%d=========\n",n);
-    printf("identifiat: %d\n",id);
-    printf("Title: %s\n",T);
-    printf("Description: %s\n",D);
-    printf("Deadline: %d jour(s)\n",jour);
-    printf("Statut: %s\n",S);
-    n++;
+    printf("La tache Bien Ajoutee.\n");
 
 }
+
 
 //Ajouter plusieurs nouvelles tâches
 void Ajouter_plutache()
 {
-    int id,jour, i, n=1;
+    int nbrTacheAjouter;
     printf("Veuillez Entrer Votre nombre des taches:");
-    scanf("%d",&t);
-    for(i=0; i<t; i++)
+    scanf("%d",&nbrTacheAjouter);
+    printf("\n");
+    printf("Veuiller entrer les tache:\n");
+    printf("\n");
+    printf("----------------------------\n");
+    for(i=0; i<nbrTacheAjouter; i++)
     {
-        printf("Veuiller entrer les tache:\n");
-        printf("Tache:%d\n",n);
+        identifiant[nbrtache] = nbrtache + 1;
 
-        printf("identifiant:");
-        scanf("%d",&id);
+        printf("Titre: ");
+        scanf("%s",title[nbrtache]);
 
-        printf("Title:");
-        scanf(" %[^\n]s",T);
+        printf("Description: ");
+        scanf("%s",description[nbrtache]);
 
-        printf("Description:");
-        scanf(" %[^\n]s",D);
+        printf("Deadline (Ex: 12/03/2023) : ");
+        scanf("%s",deadline[nbrtache]);
 
-        printf("Deadline(en jour(s)):");
-        scanf("%d",&jour);
+        printf("Statut (a realiser/en cours/finalisee) : ");
+        scanf("%s",statut[nbrtache]);
 
-        printf("Statut:");
-        scanf(" %[^\n]s\n\n\n",S);
+        nbrtache++;
 
-        printf("=========Tache:%d=========\n",n);
-        printf("identifiat: %d\n",id);
-        printf("Title: %s\n",T);
-        printf("Description: %s\n",D);
-        printf("Deadline: %d jour(s)\n",jour);
-        printf("Statut: %s\n",S);
-        n++;
+        printf("La tache Bien Ajoutee.\n");
+        printf("----------------------------\n\n");
     }
-//Afficher la liste de toutes les tâches
-
-
-
-
 }
-int main()
+
+//Afficher la liste de toutes les tâches
+//***Trier les taches par ordre alphabetique***
+void Tri_Ordre_Alphabetique()
 {
-    int choix1, choix2;
-
-    do
+    for(i=0; i<nbrtache-1; i++)
     {
-        afficher_Menu();
-
-        printf("Entrer votre choix:");
-        scanf("%d", &choix1);
-
-        switch (choix1)
+        for(j=0; j<nbrtache-1; j++)
         {
-        case 1 : nouvelle_tache();
-                 printf("\n\n");
-                 break;
-        case 2 : Ajouter_plutache();
-                 break;
-            case 3 :
-                trier();
-                printf("Entrer votre choix:");
-                scanf("%d", &choix2);
+            if (strcmp(title[j],title[j+1])> 0)
+            {
+                int tempTd = identifiant[j];
+                identifiant[j] = identifiant[j + 1];
+                identifiant[j + 1] = tempTd;
 
 
+                char tem[100];
+                strcpy(tem,title[j]);
+                strcpy(title[j],title[j+1]);
+                strcpy(title[j+1],tem);
+
+                strcpy(tem,description[j]);
+                strcpy(description[j],description[j+1]);
+                strcpy(description[j+1],tem);
 
 
+                strcpy(tem,deadline[j]);
+                strcpy(deadline[j],deadline[j+1]);
+                strcpy(deadline[j+1],tem);
 
-
-
+                strcpy(tem,statut[j]);
+                strcpy(statut[j],statut[j+1]);
+                strcpy(statut[j+1],tem);
 
             }
         }
-        while(choix1!=0);
-        return 0;
     }
+}
+
+//***Trier les taches par Deadline***
+void Tri_par_Deadline()
+{
+
+}
+
+
+//***Afficher les listes des taches***
+void affiche_liste_tache()
+{
+    printf("la liste de toutes les taches est:\n");
+    for(i=0; i<nbrtache; i++)
+    {
+        printf("--------Tache N%d--------\n",i);
+        printf("Identifiant: %d\n",identifiant[i]);
+        printf("Title: %s\n",title[i]);
+        printf("Description: %s\n",description[i]);
+        printf("Deadline: %s\n",deadline[i]);
+        printf("statut: %s\n",statut[i]);
+        printf("-------------------------\n");
+        printf("\n\n");
+    }
+}
+int main()
+{
+    int choix01, choix02;
+
+    do
+    {
+
+        afficher_Menu();
+
+        printf("Entrer votre choix:");
+        scanf("%d", &choix01);
+
+        switch (choix01)
+        {
+        case 1 :
+            nouvelle_tache();
+            break;
+        case 2 :
+            Ajouter_plutache();
+            break;
+        case 3 :
+            trier();
+            printf("Entrer votre choix:");
+            scanf("%d", &choix02);
+            switch(choix02)
+            {
+                case 1 : Tri_Ordre_Alphabetique();
+                         affiche_liste_tache();
+                case 2 : Tri_par_Deadline();
+
+            }
+        }
+    }
+    while(choix01!=8);
+
+
+    return 0;
+}
