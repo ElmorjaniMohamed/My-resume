@@ -2,7 +2,10 @@
 #include <stdlib.h>
 
 
-int nbrtache=0, i, j;
+int nbrtache=0;
+int id;
+int idsupp;
+char recherchetitle[200];
 char identifiant[100];
 char title[100][100];
 char description[100][200];
@@ -12,16 +15,16 @@ char statut[100][40];
 void afficher_Menu()
 {
     system("color 0A");
-    printf("******      Menu      ******\n");
-    printf("============================\n\n");
-    printf("1- Ajouter une nouvelle tache\n\n");
-    printf("2- Ajouter plusieurs nouvelles taches\n\n");
-    printf("3- Afficher la liste de toutes les taches\n\n");
-    printf("4- Modifier une tache\n\n");
-    printf("5- Supprimer une tache par identifiant\n\n");
-    printf("6- Rechercher les taches\n\n");
-    printf("7- Statistiques\n\n");
-    printf("8- Quitter\n\n");
+    printf("******               Menu                ******\n");
+    printf("===============================================\n\n");
+    printf("1- Ajouter une nouvelle tache_________________|\n\n");
+    printf("2- Ajouter plusieurs nouvelles taches_________|\n\n");
+    printf("3- Afficher la liste de toutes les taches_____|\n\n");
+    printf("4- Modifier une tache_________________________|\n\n");
+    printf("5- Supprimer une tache par identifiant________|\n\n");
+    printf("6- Rechercher les taches______________________|\n\n");
+    printf("7- Statistiques_______________________________|\n\n");
+    printf("8- Quitter____________________________________|\n\n");
 }
 
 //cette fonction pour afficher les choix  de trier des tâches
@@ -84,6 +87,7 @@ void nouvelle_tache()
 void Ajouter_plutache()
 {
     int nbrTacheAjouter;
+    int i;
     printf("Veuillez Entrer Votre nombre des taches:");
     scanf("%d",&nbrTacheAjouter);
     printf("\n");
@@ -109,6 +113,7 @@ void Ajouter_plutache()
         nbrtache++;
 
         printf("La tache Bien Ajoutee.\n");
+
         printf("----------------------------\n\n");
     }
 }
@@ -117,9 +122,10 @@ void Ajouter_plutache()
 //***Trier les taches par ordre alphabetique***
 void Tri_Ordre_Alphabetique()
 {
+    int i, j;
     for(i=0; i<nbrtache-1; i++)
     {
-        for(j=0; j<nbrtache-1; j++)
+        for(j=0; j<nbrtache-i-1; j++)
         {
             if (strcmp(title[j],title[j+1])> 0)
             {
@@ -161,6 +167,7 @@ void Tri_par_Deadline()
 //***Afficher les listes des taches***
 void affiche_liste_tache()
 {
+    int i;
     printf("la liste de toutes les taches est:\n");
     for(i=0; i<nbrtache; i++)
     {
@@ -174,9 +181,98 @@ void affiche_liste_tache()
         printf("\n\n");
     }
 }
+//Supprimer une tâche par identifiant
+void supprimer_Tache_par_identifiant()
+{
+    int Suptache=0;
+    int i, j;
+    for(i=0; i<nbrtache; i++)
+    {
+        if(identifiant[i]==idsupp)
+        {
+            Suptache=1;
+
+            for(j=0; j<nbrtache-1; j++)
+            {
+                identifiant[j]=identifiant[j+1];
+                strcpy(title[j],title[j+1]);
+                strcpy(description[j],description[j+1]);
+                strcpy(deadline[j],deadline[j+1]);
+                strcpy(statut[j],statut[j+1]);
+            }
+            nbrtache--;
+            printf("la tache bien supprimer\n");
+            break;
+        }
+        if(Suptache!=0)
+            printf("Auccun tache trouver par cette ID");
+    }
+
+}
+
+//Rechercher les Tâches
+//***Recherche par Identifiant***
+void rechrche_par_id()
+{
+    int i;
+    int recherche=0;
+    for(i=0; i<nbrtache; i++)
+    {
+        if(identifiant[i]==idsupp)
+        {
+            printf("-------------------------\n");
+            printf("Identifiant: %d\n",identifiant[i]);
+            printf("Title: %s\n",title[i]);
+            printf("Description: %s\n",description[i]);
+            printf("Deadline: %s\n",deadline[i]);
+            printf("statut: %s\n",statut[i]);
+            printf("-------------------------\n");
+            recherche=1;
+            break;
+        }
+
+        if(recherche!=0)
+            printf("Auccun tache declarer par cette identifiant\n");
+
+
+    }
+    printf("\n\n");
+
+}
+//***Recherche par Identifiant***
+void recherche_par_titre()
+{
+    int rechTitre=0;
+    int i;
+    for(i=0; i<nbrtache; i++)
+    {
+        if(strcmp(title[i],recherchetitle)==0)
+        {
+            printf("-------------------------\n");
+            printf("Identifiant: %d\n",identifiant[i]);
+            printf("Title: %s\n",title[i]);
+            printf("Description: %s\n",description[i]);
+            printf("Deadline: %s\n",deadline[i]);
+            printf("statut: %s\n",statut[i]);
+            printf("-------------------------\n");
+            rechTitre=1;
+            break;
+        }
+
+        if(rechTitre!=0)
+            printf("Auccun tache declarer par cette title");
+
+
+
+    }
+    printf("\n\n");
+}
+
+
 int main()
 {
-    int choix01, choix02;
+    int choix01, choix02, choix03;
+    int idrecherche;
 
     do
     {
@@ -194,17 +290,51 @@ int main()
         case 2 :
             Ajouter_plutache();
             break;
+
+
         case 3 :
             trier();
             printf("Entrer votre choix:");
             scanf("%d", &choix02);
+
             switch(choix02)
             {
-                case 1 : Tri_Ordre_Alphabetique();
-                         affiche_liste_tache();
-                case 2 : Tri_par_Deadline();
+            case 1 :
+                Tri_Ordre_Alphabetique();
+                affiche_liste_tache();
+            case 2 :
+                Tri_par_Deadline();
 
             }
+        case 4 :
+
+        case 5 :
+            printf("Veuiller Entrer ID de Votre tache:");
+            scanf("%d",&idsupp);
+            printf("\n");
+            supprimer_Tache_par_identifiant(idsupp);
+            break;
+
+
+        case 6 :
+            recherche();
+            printf("Entrer votre choix:");
+            scanf("%d", &choix03);
+            printf("\n");
+            switch(choix03)
+            {
+            case 1 :
+                printf("Veuiller Entrer ID de Votre tache:");
+                scanf("%d",&id);
+                printf("\n");
+                rechrche_par_id(id);
+            case 2 :
+                printf("Veuiller Entrer Titre de Votre tache:");
+                scanf("%s",recherchetitle);
+                printf("\n");
+                recherche_par_titre(recherchetitle);
+            }
+
         }
     }
     while(choix01!=8);
