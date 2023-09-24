@@ -4,6 +4,7 @@
 
 
 int nbrtache=0;
+int jour_actuel;
 char recherchetitle[200];
 char identifiant[100];
 char title[100][100];
@@ -13,7 +14,7 @@ char statut[100][40];
 //cette fonction pour afficher le menu
 void afficher_Menu()
 {
-    system("color 0A");
+    system("color 09");
     printf("******               Menu                ******\n");
     printf("===============================================\n\n");
     printf("1- Ajouter une nouvelle tache_________________|\n\n");
@@ -129,6 +130,7 @@ void Tri_Ordre_Alphabetique()
 {
     int i, j;
     int tempJour;
+    int temp;
     char tem[100];
 
 
@@ -138,6 +140,10 @@ void Tri_Ordre_Alphabetique()
         {
             if(strcmp(title[j],title[j+1])>0)
             {
+                temp = identifiant[j];
+                identifiant[j] = identifiant[j + 1];
+                identifiant[j + 1] = temp;
+
                 strcpy(tem,title[j]);
                 strcpy(title[j],title[j+1]);
                 strcpy(title[j+1],tem);
@@ -163,7 +169,7 @@ void Tri_par_Deadline()
 {
     int i, j;
     int temp;
-    char tempe[100];
+    int tempe[100];
     char tempStatut[100];
 
     for(i=0; i<nbrtache-1; i++)
@@ -247,9 +253,9 @@ void affiche_liste_tache()
 
 void Modification_tache()
 {
-    char Nouvelle_Statut[100];
-    int i, id;
+    char Nouvelle_Description[100];
     char Nouvelle_statut[100];
+    int i, id;
     int choix04;
     int Nouvelle_deadline[100];
 
@@ -272,9 +278,9 @@ void Modification_tache()
             {
 
                 printf("Veuiller Entrer votre modification:\n");
-                scanf("%s",Nouvelle_Statut);
+                scanf("%s",Nouvelle_Description);
 
-                strcpy(description[i],Nouvelle_Statut);
+                strcpy(description[i],Nouvelle_Description);
                 printf("la modification est bien ajoutee\n");
                 break;
             }
@@ -355,7 +361,7 @@ void supprimer_Tache_par_identifiant()
             }
             nbrtache--;
             printf("la tache bien supprimer\n");
-            return;
+            break;
         }
     }
     printf("Auccun tache trouver par cette ID");
@@ -367,7 +373,6 @@ void supprimer_Tache_par_identifiant()
 void rechrche_par_id()
 {
     int i;
-    int Verificateur=0;
     int id;
 
     printf("Veuiller Entrer ID de Votre tache:");
@@ -385,11 +390,8 @@ void rechrche_par_id()
             printf("Deadline: %d En jour(s)\n",deadline[i]);
             printf("statut: %s\n",statut[i]);
             printf("-------------------------\n");
-            Verificateur=1;
-            break;
         }
-
-        if(Verificateur!=0)
+        else
             printf("Auccun tache declarer par cette identifiant\n");
 
 
@@ -400,7 +402,6 @@ void rechrche_par_id()
 //***Recherche par Title***
 void recherche_par_titre()
 {
-    int Verificateur=0;
     int i;
 
     printf("Veuiller Entrer Titre de Votre tache:");
@@ -418,11 +419,8 @@ void recherche_par_titre()
             printf("Deadline: %d En jour(s)\n",deadline[i]);
             printf("statut: %s\n",statut[i]);
             printf("-------------------------\n");
-            Verificateur=1;
-            break;
         }
-
-        if(Verificateur!=0)
+        else
             printf("Auccun tache declarer par cette title");
 
 
@@ -430,7 +428,7 @@ void recherche_par_titre()
     }
 }
 //statistique
-void NbrTach_Cpl_Incp()
+void NbrTach_Completes_Incompletes()
 {
     int i;
     int nb_completes=0;
@@ -450,17 +448,47 @@ void NbrTach_Cpl_Incp()
     printf("Nombre de taches incompletes : %d\n", nb_incompletes);
 }
 
+void affiche_Jours_restants()
+{
+
+    if (nbrtache > 0)
+    {
+
+        int valeurAbsolue;
+        printf("Taches et nombre de jours restants jusqu'a la date limite :\n");
+
+        for (int i = 0; i < nbrtache; i++)
+        {
+            int jours_restants = deadline[i];
+
+            printf("-------- Tache N%d --------\n", i + 1);
+            printf("Titre : %s\n", title[i]);
+            printf("Description : %s\n", description[i]);
+            printf("Deadline : %d jour(s)\n", deadline[i]);
+            printf("Statut : %s\n", statut[i]);
+            printf("Jours restants : %d jour(s)\n", valeurAbsolue = fabs(jours_restants));
+            printf("-------------------------\n\n");
+        }
+
+    }
+    else
+    {
+        printf("Aucune tache n'a ete ajoutee.\n");
+    }
+
+}
+
 
 int main()
 {
     int choix01, choix02, choix03, choix04;
 
-        printf("  Y   Y  OOO  U   U  CCCC  OOO  DDDD   EEEE\n");
-        printf("   Y Y  O   O U   U C     O   O D   D  E   \n");
-        printf("    Y   O   O U   U C     O   O D   D  EEEE\n");
-        printf("    Y   O   O U   U C     O   O D   D  E   \n");
-        printf("    Y    OOO   UUU   CCCC  OOO  DDDD   EEEE\n");
-        printf("\n\n");
+    printf("  Y   Y  OOO  U   U  CCCC  OOO  DDDD   EEEE\n");
+    printf("   Y Y  O   O U   U C     O   O D   D  E   \n");
+    printf("    Y   O   O U   U C     O   O D   D  EEEE\n");
+    printf("    Y   O   O U   U C     O   O D   D  E   \n");
+    printf("    Y    OOO   UUU   CCCC  OOO  DDDD   EEEE\n");
+    printf("\n\n");
 
     do
     {
@@ -543,7 +571,11 @@ int main()
                 affiche_liste_tache();
                 break;
             case 2 :
-                NbrTach_Cpl_Incp();
+                NbrTach_Completes_Incompletes();
+                break;
+            case 3 :
+                affiche_Jours_restants();
+                break;
             }
             break;
 
