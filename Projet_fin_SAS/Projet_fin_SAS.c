@@ -278,7 +278,7 @@ void Modification_tache()
             {
 
                 printf("Veuiller Entrer votre modification:\n");
-                scanf("%s",Nouvelle_Description);
+                scanf(" %[^\n]",Nouvelle_Description);
 
                 strcpy(description[i],Nouvelle_Description);
                 printf("la modification est bien ajoutee\n");
@@ -300,7 +300,7 @@ void Modification_tache()
             if(identifiant[i]==id)
             {
                 printf("Veuiller Entrer votre modification:\n");
-                scanf("%s",Nouvelle_statut);
+                scanf(" %[^\n]",Nouvelle_statut);
 
                 strcpy(description[i],Nouvelle_statut);
 
@@ -466,7 +466,7 @@ void affiche_Jours_restants()
             printf("Description : %s\n", description[i]);
             printf("Deadline : %d jour(s)\n", deadline[i]);
             printf("Statut : %s\n", statut[i]);
-            printf("Jours restants : %d jour(s)\n", valeurAbsolue = fabs(jours_restants));
+            printf("Jours restants : %d jour(s)\n",jours_restants);
             printf("-------------------------\n\n");
         }
 
@@ -502,10 +502,12 @@ int main()
 
         case 1 :
             nouvelle_tache();
+            affiche_liste_tache();
             break;
 
         case 2 :
             Ajouter_plutache();
+            affiche_liste_tache();
             break;
 
         case 3:
