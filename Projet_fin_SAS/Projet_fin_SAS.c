@@ -64,7 +64,8 @@ void nouvelle_tache()
     printf("Veuiller entrer la tache:\n");
     printf("\n");
 
-    identifiant[nbrtache] = nbrtache + 1;
+    printf("Identifiant: ");
+    scanf("%d",&identifiant[nbrtache]);
 
     printf("Titre: ");
     scanf(" %[^\n]",title[nbrtache]);
@@ -99,7 +100,8 @@ void Ajouter_plutache()
     printf("----------------------------\n");
     for(i=0; i<nbrTacheAjouter; i++)
     {
-        identifiant[nbrtache] = nbrtache + 1;
+        printf("Identifiant: ");
+        scanf("%d",&identifiant[nbrtache]);
 
         printf("Titre: ");
         scanf(" %[^\n]",title[nbrtache]);
@@ -235,6 +237,7 @@ void affiche_liste_tache()
     int i;
 
     printf("la liste de toutes les taches est:\n");
+    printf("\n\n");
 
     for(i=0; i<nbrtache; i++)
     {
